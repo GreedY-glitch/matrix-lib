@@ -9,7 +9,20 @@
 #include <initializer_list>
 
 
+
 typedef unsigned int uint32_t;
+
+// metafunction for checking overflow (when n < initializer_list.size())
+
+// ----- isn't  work ------
+template <typename value_type, uint32_t _Size, 
+          typename _rinit_list = std::initializer_list<value_type>>
+struct is_overflow : std::conditional<(_Size < _rinit_list::size), 
+                     std::true_type, 
+                     std::false_type>::type {};
+
+
+
 
 template <class T, uint32_t N> class Array {
 private:
@@ -40,9 +53,13 @@ public:
     Array(const std::initializer_list<T>& il) {
         typename std::initializer_list<T>::iterator iter = il.begin();
 
-        uint32_t i = 0;
-        for (; iter != il.end(); ++iter, i++) {
-            __array[i] = *iter;
+        if (N < il.size()) {
+            throw std::overflow_error( "Fatal error!\n Can't make an array with current initializer_list\n");
+        } else {
+            uint32_t i = 0;
+            for (; iter != il.end(); ++iter, i++) {
+                __array[i] = *iter;
+            }
         }
     } 
 
