@@ -1,5 +1,6 @@
 #include </home/greed/Desktop/Matrix library/headers/array.hpp>
 #include <iostream>
+#include "test.cpp"
 
 
 int main() {
@@ -7,6 +8,9 @@ int main() {
     std::cout << arr << std::endl;
 
     std::cout << arr.at(3) << " " << arr.size() << std::endl;
+
+    int* ptr = nullptr;
+    if constexpr (is_pointer<decltype(ptr)>::value) { std ::cout << "It works!\n"; }
 
     return 0;
 }
