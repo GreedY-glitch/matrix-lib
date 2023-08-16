@@ -24,6 +24,7 @@ struct is_overflow : std::conditional<(_Size < _rinit_list::size),
 
 
 
+
 template <class T, uint32_t N> class Array {
 private:
     using value_type = T;
@@ -34,6 +35,8 @@ private:
 
     T __array[N];
 
+    size_type size_ = 0;
+
 public:
     /* Iterators */
 
@@ -41,12 +44,14 @@ public:
     Array() {
         for (uint32_t i = 0; i < N; i++) {
             __array[i] = 0;
+            ++size_;
         }
     }
 
     Array(pointer _arr) {
         for (int i = 0; i < N; i++) {
             __array[i] = _arr[i];
+            ++size_;
         }
     }
 
@@ -59,6 +64,7 @@ public:
             uint32_t i = 0;
             for (; iter != il.end(); ++iter, i++) {
                 __array[i] = *iter;
+                ++size_;
             }
         }
     } 
@@ -66,11 +72,24 @@ public:
     Array<T, N> operator=(pointer) noexcept;
 
     constexpr reference operator[](size_type pos) { return __array[pos]; }
+    constexpr reference at(size_type pos) { return __array[pos]; }
+
+    constexpr reference front() const noexcept { return __array[0]; }
+    constexpr reference back() const noexcept { return __array[N - 1]; }
 
     friend std::ostream& operator<<(std::ostream& os, Array<T, N>& arr) {
         uint32_t i = 0;
         while (i != N) {  std::cout << arr[i] << " "; i++; }
         return os;
+    }
+
+
+    /* Need an implementation */
+    constexpr size_type max_size() const noexcept;
+
+    constexpr size_type size() const noexcept { return size_; }
+    constexpr bool empty() const noexcept {
+        return (size_ == 0) ? true : false;
     }
 };
 
