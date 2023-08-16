@@ -47,6 +47,14 @@ public:
     } 
 
     Array<T, N> operator=(pointer) noexcept;
+
+    constexpr reference operator[](size_type pos) { return __array[pos]; }
+
+    friend std::ostream& operator<<(std::ostream& os, Array<T, N>& arr) {
+        uint32_t i = 0;
+        while (i != N) {  std::cout << arr[i] << " "; i++; }
+        return os;
+    }
 };
 
 
