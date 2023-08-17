@@ -50,6 +50,10 @@ public:
         }
     }
 
+    Matrix(const std::initializer_list<std::initializer_list<T>>& il);
+    
+    ~Matrix() = default;
+
     // operator ()
     reference operator()(size_type index_colomn, size_type index_rows) {
         return matrix[index_colomn][index_rows];
@@ -67,6 +71,33 @@ public:
         }
         return os;
     }
+
+
+    /* Iterators */
+    class iterator {};
+    class const_iterator {};
+    class reverse_iterator {};
+    class const_reverse_iterator {}; 
 };
+
+
+// Metafunction for checking underflow
+/* ----------------------------------- */
+
+
+template <std::size_t _Dim_1, std::size_t _Dim_2, typename T>
+inline Matrix<_Dim_1, _Dim_2, T>::Matrix(const std::initializer_list<std::initializer_list<T>> &il)
+{
+    typename std::initializer_list<std::initializer_list<T>>::iterator it_outside { il.begin() };
+    typename std::initializer_list<T>::iterator it_inside { il.begin()->begin() };
+    
+    size_type i = 0;
+    size_type j = 0;
+
+    // for (; it_outside != il.end(); ++it_outside, i++) 
+    //     for (; it_inside != il.end()->end(); ++it_inside, j++) 
+    //         matrix[i][j] = it_inside;
+}
+
 
 #endif  // _MATRIX_
