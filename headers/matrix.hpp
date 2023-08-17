@@ -6,6 +6,7 @@
 
 
 #include <iostream>
+#include <initializer_list>
 
 
 struct Fields {
@@ -19,17 +20,30 @@ struct Fields {
     By default it is a real_number
 */
 
-template <typename _Dim_1, typename _Dim_2, typename Field> 
-class Matrix {};
+template <std::size_t _Dim_1, std::size_t _Dim_2, typename T> 
+class Matrix 
+{
+    using value_type = T;
+    using size_type = std::size_t;
+    using reference = value_type&;
+    using const_reference = const value_type&;
+    using pointer = value_type*;
 
+    T matrix[_Dim_1][_Dim_2];   /* Private field -> raw matrix */
 
-/* Uses by default */
-template <typename _Dim_1, typename _Dim_2, decltype(Fields::REAL_NUMBER)> 
-class Matrix {};
+public:
+    /* Creates a default matrix (E) */
+    Matrix() {
+        for (std::size_t i = 0; i < _Dim_1; i++) {
 
+            for (std::size_t j = 0; j < _Dim_2; j++) 
+            {
+                if (i == j) matrix[i][j] = 1;
+                else matrix[i][j] = 0;
+            }
+        }
+    }
+};
 
-/* if you're need a complex number matrix use this */
-template <typename _Dim_1, typename _Dim_2, decltype(Fields::COMPLEX_NUMBER)> 
-class Matrix {};
 
 #endif  // _MATRIX_
