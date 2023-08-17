@@ -1,6 +1,12 @@
 #pragma once 
 
 
+/*
+    The simpliest implementation of a Matrix class
+    Supports the next operations:
+    1) 
+*/
+
 #ifndef _MATRIX_
 #define _MATRIX_
 
@@ -43,7 +49,24 @@ public:
             }
         }
     }
-};
 
+    // operator ()
+    reference operator()(size_type index_colomn, size_type index_rows) {
+        return matrix[index_colomn][index_rows];
+    }
+    // Print your matrix
+    friend std::ostream& operator<<(std::ostream& os, Matrix<_Dim_1, _Dim_2, T>& matrix) {
+        for (size_type i = 0; i < _Dim_1; i++) {
+
+            for (size_type j = 0; j < _Dim_2; j++)
+            {
+                std::cout << matrix(i, j) << " ";
+            }
+
+            std::cout << std::endl;
+        }
+        return os;
+    }
+};
 
 #endif  // _MATRIX_

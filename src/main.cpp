@@ -6,6 +6,7 @@
 
 int main() {
     Matrix<4, 4, int> matrix;
-
+    std::cout << matrix << std::endl;
+    
     return 0;
 }
